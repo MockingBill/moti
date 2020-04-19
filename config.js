@@ -68,7 +68,6 @@ var config = {
             '/maintain_tasking_detail.page',
             '/maintain_tasked_detail.page',
             '/test_detail.page',
-            //'/device_add.page',
             '/log_single.page',
             '/index.page',
             '/log_tab.page',
@@ -78,23 +77,9 @@ var config = {
             '/buy/*',
             '/user_info.page',
             '/change_pwd.page',
-
-            //'/obj_manage_route/queryMemu.json'
         ]
     },
     mysql: {
-        // 默认配置
-        /*
-        default:{
-            host: 'localhost',
-            port: 3306,
-            user: 'root',
-            password: 'root',
-            database: 'test',
-            acquireTimeout: 2000,
-            connectionLimit: 100
-        },*/
-
         default: {
             host: '127.0.0.1',
             port: 3306,
