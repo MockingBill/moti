@@ -99,7 +99,7 @@ var config = {
             host: '127.0.0.1',
             port: 3306,
             user: 'root',
-            password: '198226198484dq',
+            password: 'illidan@1994Dq',
             database: 'gmdf_demo',
             timezone:"SYSTEM",
             acquireTimeout: 2000,
