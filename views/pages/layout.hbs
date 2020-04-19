@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+      <link rel="icon" href="favicon.ico">
+      <link rel="stylesheet" href="static/css/font.css" media="all" />
+      <link rel="stylesheet" href="static/css/child.css" media="all" />
+      <link rel="stylesheet" href="static/css/single.css" media="all" />
+      <link type="favicon" rel="shortcut icon" href="static/images/favicon.ico" />
+      <link rel="stylesheet" href="static/layui/2.4.5/css/layui.css" media="all" />
+      <script type="text/javascript" src="static/layui/2.4.5/layui.js"></script>
+      <script type="text/javascript" src="static/js/utils.js"></script>
+
+      <script>
+          layui.config({
+              base: "static/layui/2.4.5"}).use(['element'], function () {
+
+          });
+
+          function signleSelect($, id) {
+              $('#'+id).next().find('.layui-table tr').click(function () {
+                  //操作   例如行变色
+                  //$(this).css('background', 'yellow');
+                  var checkCellT = $(this).parent().find("td div.laytable-cell-checkbox div.layui-form-checked I");
+                  for(var i = 0; i < checkCellT.length; i++) {
+                      checkCellT[i].click();
+                  }
+                  var checkCell = $(this).find("td div.laytable-cell-checkbox div.layui-form-checkbox I");
+                  if (checkCell.length > 0) {
+                      checkCell[0].click();
+                  }
+              });
+          }
+
+      </script>
+  </head>
+  <body>
+    {{{body}}}
+  </body>
+</html>

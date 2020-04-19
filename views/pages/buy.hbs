@@ -1,0 +1,259 @@
+<div>
+    <div style="margin-top: 10px;margin-left: 10px">
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <input type="text" value="" placeholder="输入姓名或手机号" class="layui-input search_input">
+            </div>
+            <a class="layui-btn layui-btn-primary search_btn"><i class="layui-icon">&#xe615;</i>查询</a>
+        </div>
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-primary rest_btn"><i class="layui-icon">&#xe65c;</i>重置</a>
+        </div>
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-primary save" id="save_fuc"><i class="layui-icon">&#xe654;</i>新增</a>
+        </div>
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-primary update"><i class="layui-icon">&#xe642;</i>修改</a>
+        </div>
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-primary delete"><i class="layui-icon">&#xe640;</i>删除</a>
+        </div>
+
+    </div>
+    <div class="layui-form ">
+        <table id="demo" lay-filter="TableFilter"></table>
+    </div>
+</div>
+
+<div style="display: none" id="buy_model">
+    <div class="layui-show">
+        <div class="layui-form layui-form-pane">
+            <form method="post" id="user_form" style="padding: 5px; line-height: 5px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">购买人手机号<span style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="buy_phonenumber" name="buy_phonenumber" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">购买金额<span style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="buy_money" name="buy_money" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center">
+                    <button class="layui-btn page-form-btn" id="save_btn" lay-filter="save_btn" lay-submit>保存</button>
+                    <button class="layui-btn page-form-btn" id="update_btn" lay-filter="update_btn" lay-submit>修改
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['table', 'jquery', 'layer', 'form', 'element'], function () {
+        var table = layui.table;
+        var $ = layui.$;
+        var layer = layui.layer;
+        var form = layui.form;
+
+        //数据表格示例
+        table.render({
+            elem: "#demo",
+            url: '{{projcfg.base}}/demo/buy_list',
+            cols: [[
+                // {type:"number"},
+                {type: "checkbox"},
+                // {type:"radio"},
+                {field: 'username', width: 200, title: '姓名'},
+                {field: 'buy_phonenumber', width: 200, title: '手机号'},
+                {field: 'buy_money', width: 200, title: '购买金额'},
+                {field: 'buy_datetime', width: 500, title: '日期'},
+            ]],
+            // data:[],
+            page: true,
+            done: function (res, curr, count) {
+                // 数据加载后的回调
+                console.log(res)
+                signleSelect($, "demo")
+            }
+        });
+
+
+        //添加购买记录
+        $(".save").click(function () {
+            $("#user_form")[0].reset();
+
+            openLayer(layer, {
+                type: 1,
+                title: "新增购买记录",  //显示标题
+                shade: false,
+                closeBtn: 1,         //是否显示关闭按钮
+                shadeClose: true, //显示模态窗口
+                area: ['500px', '280px'],  //宽高
+                content: $('#buy_model'),
+                success: function (layero, index) {
+                    form.on('submit(save_btn)', function (data) {
+                        console.log(data.field);
+                        var loading = layer.load(1)
+                        $.ajax({
+                            url: '{{projcfg.base}}/demo/buy_save',
+                            method: "POST",
+                            data: data.field,
+                            success: function (res) {
+                                layer.close(loading);
+                                layer.msg("新增成功", {icon: 6});
+                            },
+                            error: function () {
+                                layer.close(loading);
+                                layer.msg("新增失败", {icon: 5});
+                            }
+                        });
+                        return false
+                    })
+                }
+            }, "#save_btn")
+        })
+
+        $(".update").click(function () {
+            document.getElementById("buy_phonenumber").readOnly=true;
+            layer.msg("只允许修改购买金额", {icon: 7});
+            var checkStatus = table.checkStatus('demo');
+            if (checkStatus.data.length != 1) {
+                layer.msg("请选择一条数据。", {icon: 5});
+            } else {
+                var data = checkStatus.data;
+                openLayer(layer, {
+                    type: 1,
+                    title: "修改购买信息",  //显示标题
+                    shade: false,
+                    closeBtn: 1,         //是否显示关闭按钮
+                    shadeClose: true, //显示模态窗口
+                    area: ['500px', '200px'],  //宽高
+                    content: $('#buy_model'),
+                    // 窗口加载成功后调用
+                    success: function (layero, index) {
+                        getData(data[0]);//编辑
+                        //submit 中填入lay-filter值
+                        form.on('submit(update_btn)', function (updatedata) {
+                            var loading = layer.load(1);
+                            updatedata.field.id = data[0].id;
+                            $.ajax({
+                                url: '{{projcfg.base}}/demo/buy_update',
+                                method: "POST",
+                                data: updatedata.field,
+                                success: function (res) {
+                                    if (res.success) {
+                                        layer.close(loading);
+                                        layer.closeAll();
+                                        layer.msg("修改购买信息成功", {icon: 6}, function () {
+                                            table.reload('demo')
+                                        });
+                                    } else {
+                                        layer.close(loading);
+                                        layer.msg(res.msg, {icon: 5});
+                                    }
+                                    document.getElementById("buy_phonenumber").readOnly=false;
+                                },
+                                error: function () {
+                                    layer.close(loading);
+                                    layer.msg("修改失败", {icon: 5});
+                                    document.getElementById("buy_phonenumber").readOnly=false;
+                                }
+                            });
+                            return false
+                        })
+                    }
+                }, "#update_btn");
+                return false;
+
+            }
+        });
+
+        $(".delete").click(function () {
+            var checkStatus = table.checkStatus('demo')
+            if (checkStatus.data.length != 1) {
+                layer.msg("请选择一条数据。", {icon: 5});
+            } else {
+                var data = checkStatus.data;
+                var buy_phonenumber = data[0].buy_phonenumber;
+                var buy_money = data[0].buy_money;
+                var buy_datetime = data[0].buy_datetime;
+
+                layer.confirm('确定删除记录？', function (index) {
+                    layer.close(index);
+                    $.ajax({
+                        url: "{{projcfg.base}}/demo/buy_delete",
+                        method: "POST",
+                        data: {
+                            buy_phonenumber:buy_phonenumber,
+                            buy_money:buy_money,
+                            buy_datetime:buy_datetime,
+                        },
+                        success: function (res) {
+                            if (res.success) {
+                                layer.msg("删除购买记录成功", {icon: 6}, function () {
+                                    table.reload('demo')
+                                });
+                            } else {
+                                layer.msg(res.msg, {icon: 5});
+                            }
+                        },
+                        error: function () {
+                            layer.msg("删除失败", {icon: 5});
+                        }
+                    })
+                    return false
+                })
+
+            }
+        });
+
+
+
+        //回填数据修改 id与键一致
+        function getData(data) {
+            for (var k in data) {
+                $('#' + k).val(data[k]);
+            }
+            form.render();
+        }
+
+
+        //查询
+        $(".search_btn").click(function () {
+            var search_text = $(".search_input").val();
+            if ($(".search_input").val() != '') {
+
+                table.reload('demo', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        search_text: search_text,
+                    },
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            } else {
+                layer.msg("请输入需要查询的内容");
+            }
+        })
+        //重置
+        $(".rest_btn").click(function () {
+            $(".search_input").val("");
+            table.reload('demo', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    search_text: '',
+                },
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        })
+
+
+    })
+</script>

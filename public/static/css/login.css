@@ -1,0 +1,164 @@
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, pre, a, code, em, img, small, strong, sub, sup, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    background: transparent;
+    font-weight: 300;
+}
+
+a {
+    text-decoration: none;
+    outline: none
+}
+
+a:hover {
+    text-decoration: none
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+img {
+    border: none;
+    outline: none
+}
+
+ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: none
+}
+
+input[type=button], input[type=text], input[type=password], button, textarea {
+    -webkit-appearance: none;
+    outline: none
+}
+html,body{
+    height: 100%;
+}
+body{
+    background: url("../../project/img/login/login-bg2.jpg") no-repeat top left;
+    background-size: 100% 100%;
+}
+.login-box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width:240px;
+    background: rgba(255,255,255,1);
+    z-index: 1;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    padding:2vh 3vw;
+}
+.login-header{
+    background: url('../images/logo.png') no-repeat;
+    background-size: 40px 40px;
+    color: #0582cc;
+    font-size:20px;
+    padding-left: 40px;
+    line-height: 40px;
+}
+.login-form,.login-list{
+    overflow: hidden;
+}
+.login-form{
+    margin-top:2vh;
+}
+.login-info{
+    border: 1px solid #ddd;
+    overflow: hidden;
+    margin:10px 0;
+    padding: 10px;
+    position: relative;
+}
+.login-info input[type=text],.login-info input[type=password]{
+    border: none;
+    background: none;
+    width: 100%;
+    padding: 0 0 0 30px;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 0.6vw;
+    font-weight: 300;
+}
+.login-info i{
+    width: 20px;
+    height:20px;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 50%;
+    left:10px;
+    transform: translate(0,-50%);
+
+}
+.login-info i.user-icon{
+    background: url("../images/user-icon.png") no-repeat center;
+    background-size: 100% 100%;
+}
+.login-info i.pwd-icon{
+    background: url("../images/password-icon.png") no-repeat center;
+    background-size: 100% 100%;
+}
+.code-info{
+    border: 1px solid #ddd;
+    overflow: hidden;
+    margin:10px 0;
+    padding: 10px;
+    position: relative;
+    float: left;
+    width: 50%;
+    box-sizing: border-box;
+}
+.code-info input[type=text]{
+    border: none;
+    background: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 0.6vw;
+    font-weight: 300;
+}
+.code-img{
+    display: block;
+    float: left;
+    overflow: hidden;
+    height: 100%;
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.btn-list{
+    overflow: hidden;
+    margin: 10px 0;
+}
+.btn-list button{
+    background: #1890ff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    color: #FFF;
+    padding: 10px 0;
+    width: 100%;
+    font-size: 0.6vw;
+    font-weight: 300;
+    border: none;
+}
+.btn-list button:hover{
+    background: #1387f2;
+}
+.footer{
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translate(-50%,0);
+    color: #777;
+    text-align: center;
+    font-size: 0.5vw;
+}

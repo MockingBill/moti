@@ -1,0 +1,9 @@
+.layui-nav .layui-nav-item>a {
+    color: #666666!important;
+}
+.layui-side .layui-nav .layui-nav-more {
+    border-color: #666666 transparent transparent;
+}
+.layui-side .layui-nav-itemed .layui-nav-more {
+    border-color: transparent transparent #666666;
+}

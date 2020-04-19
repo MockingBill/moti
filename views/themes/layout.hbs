@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <base href="{{projcfg.base}}/">
+    <title>{{projcfg.project_title}}</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="static/layui/2.4.5/css/layui.css" media="all" />
+    <link rel="stylesheet" href="static/css/font.css" media="all" />
+    <link rel="stylesheet" href="static/css/child.css" media="all" />
+    <link rel="stylesheet" href="static/css/single.css" media="all" />
+    <link type="favicon" rel="shortcut icon" href="static/images/favicon.ico" />
+    <script type="text/javascript" src="static/layui/2.4.5/layui.js"></script>
+
+    <script>
+        layui.config({
+            base: "static/layui/2.4.5"}).use(['element'], function () {
+
+            });
+
+        function signleSelect($, id) {
+            $('#'+id).next().find('.layui-table tr').click(function () {
+                //操作   例如行变色
+                //$(this).css('background', 'yellow');
+                var checkCellT = $(this).parent().find("td div.laytable-cell-checkbox div.layui-form-checked I");
+                for(var i = 0; i < checkCellT.length; i++) {
+                    checkCellT[i].click();
+                }
+                var checkCell = $(this).find("td div.laytable-cell-checkbox div.layui-form-checkbox I");
+                if (checkCell.length > 0) {
+                    checkCell[0].click();
+                    }
+                });
+            }
+
+    </script>
+</head>
+    <body></body>
+    <div>
+        {{{body}}}
+    </div>
+</html>

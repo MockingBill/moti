@@ -1,0 +1,568 @@
+<div>
+    <div style="margin-top: 10px;margin-left: 10px">
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <input type="text" value="" placeholder="输入姓名或手机号" class="layui-input search_input">
+            </div>
+            <a class="layui-btn layui-btn-primary search_btn"><i class="layui-icon">&#xe615;</i>查询</a>
+        </div>
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-primary rest_btn"><i class="layui-icon">&#xe65c;</i>重置</a>
+        </div>
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-primary save" id="save_fuc"><i class="layui-icon">&#xe654;</i>新增会员</a>
+        </div>
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-primary update"><i class="layui-icon">&#xe642;</i>修改</a>
+        </div>
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-primary delete"><i class="layui-icon">&#xe640;</i>删除</a>
+        </div>
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-primary buy"><i class="layui-icon">&#xe630;</i>购买</a>
+        </div>
+
+        <div class="layui-inline">
+            <a class="layui-btn layui-btn-primary info"><i class="layui-icon">&#xe611;</i>详情</a>
+        </div>
+    </div>
+    <div class="layui-form ">
+        <table id="demo" lay-filter="TableFilter"></table>
+    </div>
+</div>
+
+<div style="display: none" id="user_model">
+    <div class="layui-show">
+        <div class="layui-form layui-form-pane">
+            <form method="post" id="user_form" style="padding: 5px; line-height: 5px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" id="rom_phonenumber_lable">推荐人手机号</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="rom_phonenumber" name="rom_phonenumber" required lay-verify=""
+                               autocomplete="off" class="layui-input" placeholder="请输入推荐手机号查询是否合法"
+                               onchange="is_right_rom_phonenumber(this.value)">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名<span style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="username" name="username" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">手机号<span style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="phonenumber" name="phonenumber" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="text-align: center">
+                    <button class="layui-btn page-form-btn" id="save_btn" lay-filter="save_btn" lay-submit>保存</button>
+                    <button class="layui-btn page-form-btn" id="update_btn" lay-filter="update_btn" lay-submit>修改
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div style="display: none" id="buy_model">
+    <div class="layui-show">
+        <div class="layui-form layui-form-pane">
+            <form method="post" id="buy_form" style="padding: 5px; line-height: 5px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" id="phonenumber_lable">购买人手机号</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="buy_phonenumber" name="phonenumber" required lay-verify=""
+                               autocomplete="off"
+                               class="layui-input" onchange="query_phonenumber(this.value)">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" id="buy_local_money_lable">会员购买金额<span
+                            style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="buy_local_money" name="buy_local_money" required lay-verify="required"
+                               autocomplete="off" class="layui-input" readonly="readonly">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" id="buy_rom_money_lable">推荐金额<span
+                            style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="buy_rom_money" name="buy_rom_money" required lay-verify="required"
+                               autocomplete="off" class="layui-input" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" id="buy_rom_num_lable">推荐人数<span
+                            style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="buy_rom_num" name="buy_rom_num" required lay-verify="required"
+                               autocomplete="off" class="layui-input" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" id="currnt_buy_money_lable">本次购买金额<span
+                            style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="currnt_buy_money" name="currnt_buy_money" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item" style="text-align: center">
+                    <button class="layui-btn page-form-btn" id="buy_btn" lay-filter="buy_btn" lay-submit>下单</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div style="display: none" id="qrcode_model">
+    <div>
+        <div>
+            <label>请让客户保存该二维码，于下次购买时出示。或者出示手机号均可。</label>
+        </div>
+        <center>
+            <div id="qrcode" style="margin-top: 20px"></div>
+        </center>
+    </div>
+</div>
+
+
+<div style="display: none" id="info_model">
+    <div class="layui-show">
+        <div class="layui-form layui-form-pane">
+            <form method="post" id="user_form" style="padding: 5px; line-height: 5px;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" id="rom_phonenumber_lable">姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="info_username" name="info_username" required lay-verify=""
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">手机号<span style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="info_phonenumber" name="info_phonenumber" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">购买金额<span style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="info_local_money" name="info_local_money" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">推荐人数<span style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="info_rom_num" name="info_rom_num" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">推荐金额<span style="color:red">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" id="info_rom_money" name="info_rom_money" required lay-verify="required"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <center>
+                    <div id="qrcode2" style="margin-top: 20px"></div>
+                </center>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+
+
+
+    function makeCode(text,id) {
+        var qrcode = new QRCode(id, {
+            width: 200,
+            height: 200,
+            background: "#ffffff",
+            foreground: "#000000",
+            <!--src: "{{projcfg.base}}/static/images/qrcode.jpg"-->
+        });
+        qrcode.makeCode(text);
+    }
+
+
+    /**
+     * 查询是否是正确的推荐人
+     * @param rom_phonenumber
+     */
+    function is_right_rom_phonenumber(rom_phonenumber) {
+
+        var label = document.getElementById("rom_phonenumber_lable");
+        rom_phonenumber = rom_phonenumber.replace(/\s*/g, "");
+        if (rom_phonenumber != "") {
+            $.ajax({
+                type: "POST",
+                url: "{{projcfg.base}}/demo/query_phonenumber",
+                data: {rom_phonenumber: rom_phonenumber},
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.code == "001") {
+                        label.style.color = 'green';
+                        layer.msg("推荐人有效", {icon: 1});
+                    } else {
+                        label.style.color = 'LightSlateGray';
+                        layer.msg("推荐人无效", {icon: 5});
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * 查询该顾客购买历史详情
+     * @param phonenumber
+     */
+    function query_phonenumber(phonenumber) {
+        var local = document.getElementById("buy_local_money");
+        var rom = document.getElementById("buy_rom_money");
+        var num = document.getElementById("buy_rom_num");
+
+        local.value = "";
+        rom.value = "";
+        phonenumber = phonenumber.replace(/\s*/g, "");
+        if (phonenumber != "") {
+            $.ajax({
+                type: "POST",
+                url: "{{projcfg.base}}/demo/query_buy_detail",
+                data: {phonenumber: phonenumber},
+                dataType: "json",
+                success: function (data) {
+                    if (data.local_money == -1 && data.rom_money == -1) {
+
+                        var r = confirm("没有该手机号的会员信息，是否进行新会员添加");
+                        if (r == true) {
+                            document.getElementById("save_fuc").click();
+                        }
+
+                    } else {
+                        local.value = data.local_money;
+                        rom.value = data.rom_money;
+                        num.value = data.rom_num;
+                    }
+
+                },
+                error: function (err) {
+                    layer.msg("查询出现错误，请重新输入手机号", {icon: 5});
+                }
+            });
+        }
+
+    }
+
+
+    layui.use(['table', 'jquery', 'layer', 'form', 'element'], function () {
+        var table = layui.table;
+        var $ = layui.$;
+        var layer = layui.layer;
+        var form = layui.form;
+
+        //数据表格示例
+        table.render({
+            elem: "#demo",
+            url: '{{projcfg.base}}/demo/list',
+            cols: [[
+                // {type:"number"},
+                {type: "checkbox"},
+                // {type:"radio"},
+                {field: 'username', width: 600, title: '姓名'},
+                {field: 'phonenumber', width: 600, title: '手机号'},
+            ]],
+            // data:[],
+            page: true,
+            done: function (res, curr, count) {
+                // 数据加载后的回调
+                console.log(res)
+                signleSelect($, "demo")
+            }
+        });
+
+        /**
+         * 添加购买记录窗口
+         */
+        $(".buy").click(function () {
+            $("#buy_form")[0].reset();
+            openLayer(layer, {
+                type: 1,
+                title: "购买信息录入",  //显示标题
+                shade: false,
+                closeBtn: 1,         //是否显示关闭按钮
+                shadeClose: true, //显示模态窗口
+                area: ['700px', '300px'],  //宽高
+                content: $('#buy_model'),
+                success: function (layero, index) {
+                    form.on('submit(buy_btn)', function (data) {
+                        console.log(data.field);
+                        var loading = layer.load(1)
+                        $.ajax({
+                            url: '{{projcfg.base}}/demo/add_buy_detail',
+                            method: "POST",
+                            data: data.field,
+                            success: function (res) {
+                                layer.close(loading);
+                                layer.closeAll();
+                                layer.msg("购买信息录入成功", {icon: 6}, function () {
+                                    table.reload('demo')
+                                });
+                            },
+                            error: function () {
+                                layer.close(loading);
+                                layer.msg("购买信息录入失败", {icon: 5});
+                            }
+                        });
+                        return false
+                    })
+                }
+            }, "#buy_btn")
+
+        });
+
+        //添加会员
+        $(".save").click(function () {
+            $("#user_form")[0].reset();
+
+            openLayer(layer, {
+                type: 1,
+                title: "添加会员",  //显示标题
+                shade: false,
+                closeBtn: 1,         //是否显示关闭按钮
+                shadeClose: true, //显示模态窗口
+                area: ['500px', '280px'],  //宽高
+                content: $('#user_model'),
+                success: function (layero, index) {
+                    form.on('submit(save_btn)', function (data) {
+                        console.log(data.field);
+                        var loading = layer.load(1)
+                        $.ajax({
+                            url: '{{projcfg.base}}/demo/save',
+                            method: "POST",
+                            data: data.field,
+                            success: function (res) {
+                                if (res.success) {
+                                    layer.close(loading);
+                                    layer.closeAll();
+                                    layer.msg(res.msg, {icon: 6}, function () {
+                                        table.reload('demo')
+                                    });
+                                    makeCode(data.field.phonenumber,'qrcode');
+                                    openLayer(layer, {
+                                        type: 1,
+                                        title: "新用户二维码",  //显示标题
+                                        shade: false,
+                                        closeBtn: 1,         //是否显示关闭按钮
+                                        shadeClose: true, //显示模态窗口
+                                        area: ['500px', '350px'],  //宽高
+                                        content: $('#qrcode_model')
+                                    });
+
+                                } else {
+                                    layer.close(loading);
+                                    layer.msg(res.msg, {icon: 5});
+                                }
+                            },
+                            error: function () {
+                                layer.close(loading);
+                                layer.msg("新增失败", {icon: 5});
+                            }
+                        });
+                        return false
+                    })
+                }
+            }, "#save_btn")
+        })
+
+        $(".update").click(function () {
+            var checkStatus = table.checkStatus('demo')
+            if (checkStatus.data.length != 1) {
+                layer.msg("请选择一条数据。", {icon: 5});
+            } else {
+                var data = checkStatus.data;
+                openLayer(layer, {
+                    type: 1,
+                    title: "修改用户信息",  //显示标题
+                    shade: false,
+                    closeBtn: 1,         //是否显示关闭按钮
+                    shadeClose: true, //显示模态窗口
+                    area: ['500px', '200px'],  //宽高
+                    content: $('#user_model'),
+                    // 窗口加载成功后调用
+                    success: function (layero, index) {
+                        getData(data[0]);//编辑
+                        //submit 中填入lay-filter值
+                        form.on('submit(update_btn)', function (updatedata) {
+                            var loading = layer.load(1);
+                            updatedata.field.id = data[0].id;
+                            $.ajax({
+                                url: '{{projcfg.base}}/demo/update',
+                                method: "POST",
+                                data: updatedata.field,
+                                success: function (res) {
+                                    if (res.success) {
+                                        layer.close(loading);
+                                        layer.closeAll();
+                                        layer.msg(res.msg, {icon: 6}, function () {
+                                            table.reload('demo')
+                                        });
+                                    } else {
+                                        layer.close(loading);
+                                        layer.msg(res.msg, {icon: 5});
+                                    }
+                                },
+                                error: function () {
+                                    layer.close(loading);
+                                    layer.msg("修改失败", {icon: 5});
+                                }
+                            });
+                            return false
+                        })
+                    }
+                }, "#update_btn");
+                return false;
+
+            }
+        });
+
+        $(".delete").click(function () {
+            var checkStatus = table.checkStatus('demo')
+            if (checkStatus.data.length != 1) {
+                layer.msg("请选择一条数据。", {icon: 5});
+            } else {
+                var data = checkStatus.data;
+                var id = data[0].id;
+                layer.confirm('确定删除记录？', function (index) {
+                    layer.close(index);
+                    $.ajax({
+                        url: "{{projcfg.base}}/demo/delete",
+                        method: "POST",
+                        data: {id: id},
+                        success: function (res) {
+                            if (res.success) {
+                                layer.msg(res.msg, {icon: 6}, function () {
+                                    table.reload('demo')
+                                });
+                            } else {
+                                layer.msg(res.msg, {icon: 5});
+                            }
+                        },
+                        error: function () {
+                            layer.msg("删除失败", {icon: 5});
+                        }
+                    })
+                    return false
+                })
+
+            }
+        });
+        $(".info").click(function () {
+
+            var info_username = document.getElementById("info_username");
+            var info_phonenumber = document.getElementById("info_phonenumber");
+            var info_local_money = document.getElementById("info_local_money");
+            var info_rom_num = document.getElementById("info_rom_num");
+            var info_rom_money = document.getElementById("info_rom_money");
+
+
+            var checkStatus = table.checkStatus('demo')
+            if (checkStatus.data.length != 1) {
+                layer.msg("请选择一条数据。", {icon: 5});
+            } else {
+                var data = checkStatus.data;
+                var id = data[0].id;
+                $.ajax({
+                    url: "{{projcfg.base}}/demo/info",
+                    method: "POST",
+                    data: {id: id},
+                    success: function (res) {
+                        if (res.success) {
+
+                            openLayer(layer, {
+                                type: 1,
+                                title: "用户信息详情",  //显示标题
+                                shade: false,
+                                closeBtn: 1,         //是否显示关闭按钮
+                                shadeClose: true, //显示模态窗口
+                                area: ['500px', '550px'],  //宽高
+                                content: $('#info_model'),
+                                // 窗口加载成功后调用
+                                success: function (layero, index) {
+                                    info_username.value = res.data.username;
+                                    info_phonenumber.value = res.data.phonenumber;
+                                    info_local_money.value = res.data.local_money;
+                                    info_rom_num.value = res.data.rom_num;
+                                    info_rom_money.value = res.data.rom_money;
+                                    makeCode( res.data.phonenumber,'qrcode2')
+                                }
+                            },);
+                        } else {
+
+                        }
+                    },
+                    error: function () {
+                        layer.msg("查询失败", {icon: 5});
+                    }
+                });
+                return false
+            }
+        });
+
+
+        //回填数据修改 id与键一致
+        function getData(data) {
+            for (var k in data) {
+                $('#' + k).val(data[k]);
+            }
+            form.render();
+        }
+
+
+        //查询
+        $(".search_btn").click(function () {
+            var search_text = $(".search_input").val();
+            if ($(".search_input").val() != '') {
+
+                table.reload('demo', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        search_text: search_text,
+                    },
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            } else {
+                layer.msg("请输入需要查询的内容");
+            }
+        })
+        //重置
+        $(".rest_btn").click(function () {
+            $(".search_input").val("");
+            table.reload('demo', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    search_text: '',
+                },
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        })
+
+
+    })
+</script>
