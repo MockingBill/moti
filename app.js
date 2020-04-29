@@ -13,8 +13,32 @@ var hbs = require("hbs")
 var config = require('./config')
 
 var gmdf = require('gmdf').init_gmdf(config)
-
+var log4js = require('log4js');
 var app = express();
+
+
+log4js.configure({
+    'appenders': [
+        {
+            type: 'console'
+        },
+        {
+            type: 'dateFile',
+            filename: './logs/app',
+            pattern: '-yyyy-MM-dd.log',
+            alwaysIncludePattern: true,
+            category: 'app'
+        }
+    ],
+    "replaceConsole": true
+});
+
+module.exports.logger = log4js.getLogger('app');
+app.use(log4js.connectLogger(this.logger,
+    {level: 'ALL', format: ':remote-addr :method :url :status :response-time ms'}
+));
+
+
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));

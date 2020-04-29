@@ -390,7 +390,8 @@
         })
 
         $(".update").click(function () {
-            var checkStatus = table.checkStatus('demo')
+            var checkStatus = table.checkStatus('demo');
+
             if (checkStatus.data.length != 1) {
                 layer.msg("请选择一条数据。", {icon: 5});
             } else {
@@ -403,6 +404,13 @@
                     shadeClose: true, //显示模态窗口
                     area: ['500px', '200px'],  //宽高
                     content: $('#user_model'),
+                    cancel:function () {
+
+                            $('#rom_phonenumber').attr("readonly","false");
+                            layer.msg(res.msg, {icon: 5});
+
+
+                    },
                     // 窗口加载成功后调用
                     success: function (layero, index) {
                         getData(data[0]);//编辑
@@ -433,7 +441,8 @@
                             });
                             return false
                         })
-                    }
+                    },
+
                 }, "#update_btn");
                 return false;
 

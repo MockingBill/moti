@@ -1,6 +1,6 @@
 var mysql_utils = require('gmdf').init_gmdf().get_mysql_utils()
 
-
+var app=require('../../app');
 var appUtils = require('gmdf').init_gmdf().get_app_utils()
 
 
@@ -29,6 +29,7 @@ exports.getDemo = function (res, params) {
 
             resolve(appUtils.respJsonData(res, result))
         } catch (err) {
+            app.logger.info(err);
             reject(err)
         }
     })
@@ -44,9 +45,11 @@ exports.saveUserWithRom = function (mapEntity1, mapEntity2) {
                 });
 
             }).catch(function (err) {
+                app.logger.info(err);
                 reject(err)
             })
         } catch (err) {
+            app.logger.info(err);
             reject(err)
         }
     })
@@ -64,9 +67,11 @@ exports.saveUser = function (mapEntity) {
             await mysql_utils.save("business_user_info", mapEntity).then(function (result) {
                 resolve(result)
             }).catch(function (err) {
+                app.logger.info(err);
                 reject(err)
             })
         } catch (err) {
+            app.logger.info(err);
             reject(err)
         }
     })
@@ -84,9 +89,11 @@ exports.query_phonenumber = function (phonenumber) {
             await mysql_utils.find("select count(*) as num from business_user_info where phonenumber=?", [phonenumber]).then(function (result) {
                 resolve(result)
             }).catch(function (err) {
+                app.logger.info(err);
                 reject(err)
             })
         } catch (err) {
+            app.logger.info(err);
             reject(err)
         }
     })
@@ -104,9 +111,11 @@ exports.add_buy_detail = function (mapEntity) {
             await mysql_utils.save("business_shopping_details", mapEntity).then(function (result) {
                 resolve(result)
             }).catch(function (err) {
+                app.logger.info(err);
                 reject(err)
             })
         } catch (err) {
+            app.logger.info(err);
             reject(err)
         }
     })
@@ -173,9 +182,11 @@ exports.query_buy_detail = function (phonenumber) {
                     })
                 }
             }).catch(function (err) {
+                app.logger.info(err);
                 reject(err)
             })
         } catch (err) {
+            app.logger.info(err);
             reject(err)
         }
     })
@@ -194,9 +205,11 @@ exports.updateUser = function (conditions, mapEntity) {
             await mysql_utils.update("business_user_info", conditions, mapEntity).then(function (result) {
                 resolve(result)
             }).catch(function (err) {
+                app.logger.info(err);
                 reject(err)
             })
         } catch (err) {
+            app.logger.info(err);
             reject(err)
         }
     })
@@ -214,9 +227,11 @@ exports.deleteUser = function (conditions) {
             await mysql_utils.delete("business_user_info", conditions).then(function (result) {
                 resolve(result)
             }).catch(function (err) {
+                app.logger.info(err);
                 reject(err)
             })
         } catch (err) {
+            app.logger.info(err);
             reject(err)
         }
     })
@@ -243,7 +258,7 @@ exports.query_info = function (user_id) {
                 rom_money: rom_money[0].rom ? rom_money[0].rom:0
             })
         } catch (err) {
-            console.log(err);
+            app.logger.info(err);
             reject(err)
         }
     })
